@@ -1,0 +1,16 @@
+services:
+  postgres:
+    container_name: postgresql
+    image: postgres:18-alpine
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_USER: ecommerce
+      POSTGRES_PASSWORD: ecommerce
+    volumes:
+      - "pg_data:/var/lib/postgresql/data"
+
+volumes:
+  pg_data:

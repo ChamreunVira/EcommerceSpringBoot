@@ -13,6 +13,7 @@ import lombok.Setter;
 public class OrderLineId {
 
     private Long orderId;
+
     private Long productId;
 
 }

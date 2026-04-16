@@ -35,5 +35,5 @@ public class UserResponse {
     private List<CredentialResponse> credentials;
     @JsonProperty("socialProfiles")
     private List<SocialProfileResponse> socialProfiles;
-
+    private String token;
 }

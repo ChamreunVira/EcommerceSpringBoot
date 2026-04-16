@@ -23,7 +23,4 @@ public class AuthRequest {
     @NotBlank(message = "Password is required.")
     @Size(min = 5 , max = 100 , message = "Password must be at least more than 5 characters.")
     private String password;
-
-    @NotNull(message = "User role is required.")
-    private Long roleId;
 }

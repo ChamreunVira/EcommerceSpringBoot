@@ -8,6 +8,7 @@ import com.kh.vira_dev.ecommerce.entity.SocialProfile;
 import com.kh.vira_dev.ecommerce.entity.User;
 import com.kh.vira_dev.ecommerce.io.request.AuthRequest;
 import com.kh.vira_dev.ecommerce.io.request.UserRequest;
+import com.kh.vira_dev.ecommerce.io.response.SocialProfileResponse;
 import com.kh.vira_dev.ecommerce.io.response.UserResponse;
 import com.kh.vira_dev.ecommerce.mapper.AuthMapper;
 import com.kh.vira_dev.ecommerce.service.FileUploadService;
@@ -60,6 +61,7 @@ public class AuthMapperImpl implements AuthMapper {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
+                .slug(user.getSlug())
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .bio(user.getBio())
@@ -70,12 +72,26 @@ public class AuthMapperImpl implements AuthMapper {
                 .lastLogin(user.getLastLogin())
                 .emailValidated(user.getEmailValidated())
                 .phoneValidated(user.getPhoneValidated())
+                .socialProfiles(user.getSocialProfiles().stream()
+                        .map(this::toSocialProfileResponse)
+                        .toList())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .build();
     }
 
     @Override
     public void updateFromRequest(User user, AuthRequest request) {
 
+    }
+
+    private SocialProfileResponse toSocialProfileResponse(SocialProfile socialProfile) {
+        return SocialProfileResponse.builder()
+                .id(socialProfile.getId())
+                .socialPlatform(socialProfile.getPlatform().name())
+                .platformUser(socialProfile.getPlatformName())
+                .createdAt(socialProfile.getCreatedAt())
+                .build();
     }
 
     private Credential toCredentials(User user , UserRequest request) {
@@ -90,8 +106,9 @@ public class AuthMapperImpl implements AuthMapper {
 
     private SocialProfile toSocialProfile(User user , UserRequest request) {
         SocialProfile socialProfile = new SocialProfile();
+        socialProfile.setUser(user);
         socialProfile.setPlatform(Platform.valueOf(request.getPlatform()));
-        socialProfile.setPlatformName(request.getPlatform());
+        socialProfile.setPlatformName(request.getPlatformUser());
         return socialProfile;
     }
 

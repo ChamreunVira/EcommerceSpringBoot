@@ -58,6 +58,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "company" , nullable = false , length = 50)
     private String company;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tbl_user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "role" , nullable = false , length = 30)
     private List<Role> role;

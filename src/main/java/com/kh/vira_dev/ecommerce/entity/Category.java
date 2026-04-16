@@ -26,10 +26,12 @@ public class Category extends BaseEntity{
     @Column(name = "description" , nullable = false , length = 100)
     private String description;
 
-    @Column(name = "tags" , nullable = false , length = 15)
+    @ElementCollection
+    @CollectionTable(name = "tbl_category_tag", joinColumns = @JoinColumn(name = "category_id"))
+    @Column(name = "tag" , nullable = false , length = 15)
     private List<String> tags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    private List<Product> products;
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL , fetch = FetchType.LAZY , orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
 
 }

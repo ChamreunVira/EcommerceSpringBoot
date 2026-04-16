@@ -1,9 +1,11 @@
 package com.kh.vira_dev.ecommerce.security.impl;
 
 import com.kh.vira_dev.ecommerce.entity.User;
+import com.kh.vira_dev.ecommerce.exception.DuplicateResourceException;
 import com.kh.vira_dev.ecommerce.io.request.AuthRequest;
 import com.kh.vira_dev.ecommerce.io.request.UserRequest;
 import com.kh.vira_dev.ecommerce.io.response.UserResponse;
+import com.kh.vira_dev.ecommerce.jwt.JwtService;
 import com.kh.vira_dev.ecommerce.mapper.AuthMapper;
 import com.kh.vira_dev.ecommerce.repository.UserRepository;
 import com.kh.vira_dev.ecommerce.security.AuthService;
@@ -17,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,24 +29,38 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final AuthMapper authMapper;
     private final AuthenticationManager authenticationManager;
-
+    private final JwtService jwtService;
+    
     @Override
+    @Transactional
     public UserResponse register(UserRequest request) {
+        if(userRepository.existsByEmail(request.getEmail())) {
+            throw new DuplicateResourceException("User email is already in use with Email: " + request.getEmail());
+        }
         User user = authMapper.toEntity(request);
         User saved = userRepository.save(user);
-        return authMapper.toResponse(saved);
+        String token = jwtService.generateToken(saved.getEmail());
+        UserResponse response = authMapper.toResponse(saved);
+        response.setToken(token);
+        return response;
     }
 
     @Override
     public UserResponse login(AuthRequest request) {
+        
         Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(),
-                        request.getPassword())
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with Email: " + request.getEmail()));
-        return authMapper.toResponse(user);
+        String token = jwtService.generateToken(user.getEmail());
+        UserResponse response = authMapper.toResponse(user);
+        response.setToken(token);
+        return response;
     }
 
     @Override
@@ -63,12 +80,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<UserResponse> getAll(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
         return users.map(authMapper::toResponse);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponse getById(Long id) {
         User user = findByOrThrow(id);
         return authMapper.toResponse(user);

@@ -27,16 +27,22 @@ public class Product extends BaseEntity {
     @Column(name = "summary" , nullable = false , length = 100)
     private String summary;
 
+    @Column(name = "description" , nullable = false , length = 150)
+    private String description;
+
     @Column(name = "price" , nullable = false)
     private float price;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "discount_type" , nullable = false)
     private DiscountType discountType;
 
     @Column(name = "discount_value" , nullable = false)
     private float discountValue;
 
-    @Column(name = "tags" , nullable = false , length = 15)
+    @ElementCollection
+    @CollectionTable(name = "tbl_product_tag", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "tag" , nullable = false , length = 15)
     private List<String> tags = new ArrayList<>();
 
     @ManyToOne

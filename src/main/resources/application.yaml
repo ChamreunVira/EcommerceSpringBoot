@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: ecommerce-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    username: ecommerce
+    password: ecommerce
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+
+jwt:
+  base64Secret: BunchheanIsOneOfTheBestSpringBootDeveloperAtRUPPInCambodia67676767
+  expiration: 900000
+
+refresh-token:
+  expiry-date: 604800000

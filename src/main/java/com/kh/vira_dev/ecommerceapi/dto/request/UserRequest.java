@@ -1,0 +1,24 @@
+package com.kh.vira_dev.ecommerceapi.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UserRequest {
+
+    @NotBlank(message = "full name is required.")
+    private String fullName;
+
+    @NotBlank(message = "email is required.")
+    private String email;
+
+    @NotBlank(message = "password is required.")
+    private String password;
+
+}

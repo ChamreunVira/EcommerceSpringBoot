@@ -21,6 +21,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 
+uploads:
+  dir: /home/chamreunvira/Desktop/ecommerce-api/uploads/products
 
 jwt:
   base64Secret: BunchheanIsOneOfTheBestSpringBootDeveloperAtRUPPInCambodia67676767

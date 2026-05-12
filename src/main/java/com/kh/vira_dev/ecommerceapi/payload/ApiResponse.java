@@ -25,6 +25,10 @@ public class ApiResponse<T> {
     private LocalDateTime timestamp;
 
 
+    public static <T> ApiResponse<T> success(String message) {
+        return responseBuilder(HttpStatus.OK.value() , message, null);
+    }
+
     public static <T> ApiResponse<T> success(int status, String message, T data) {
         return responseBuilder(status, message, data);
     }

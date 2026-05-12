@@ -55,4 +55,7 @@ public class User extends BaseEntity{
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private RefreshToken refreshToken;
 
+    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<Product> products;
+
 }

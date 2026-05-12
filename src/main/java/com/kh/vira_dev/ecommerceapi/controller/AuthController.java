@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -36,9 +37,10 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(authService.singIn(request)));
     }
 
-    @PostMapping("/refressh-token")
+    @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<RefreshTokenResponse>> newAccessToken(@Valid @RequestBody RefreshTokenRequest request) {
         RefreshTokenResponse response = refreshTokenService.verify(request.getRefreshToken());
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
 }

@@ -1,7 +1,9 @@
 package com.kh.vira_dev.ecommerceapi.service.impl;
 
+import com.kh.vira_dev.ecommerceapi.dto.response.RefreshTokenResponse;
 import com.kh.vira_dev.ecommerceapi.entity.RefreshToken;
 import com.kh.vira_dev.ecommerceapi.entity.User;
+import com.kh.vira_dev.ecommerceapi.exception.ResourceNotFoundException;
 import com.kh.vira_dev.ecommerceapi.jwt.JwtService;
 import com.kh.vira_dev.ecommerceapi.repository.RefreshTokenRepository;
 import com.kh.vira_dev.ecommerceapi.service.RefreshTokenService;
@@ -34,7 +36,25 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public boolean verify(String token) {
-        return false;
+    public RefreshTokenResponse verify(String token) {
+
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new ResourceNotFoundException("Refresh"));
+        
+        if(refreshToken.getExpiryDate().isBefore(Instant.now())) {
+            String accessToken = jwtService.generateToken(refreshToken.getUser().getEmail());
+            String refresh = jwtService.generateToken(refreshToken.getUser().getEmail());
+            refreshToken.setToken(refresh);
+            return toResponse(accessToken);
+        }
+
+       throw new IllegalArgumentException("Refresh token expired");
+    }
+
+    private RefreshTokenResponse toResponse(String accessToken) {
+        return RefreshTokenResponse
+                .builder()
+                .accessToken(accessToken)
+                .build();
     }
 }

@@ -20,6 +20,7 @@ public class ProductMapper {
 
     private final AuthService authService;
     private final CategoryRepository categoryRepository;
+    private final FileUploadUtils fileUploadUtils;
 
     public Product toEntity(ProductRequest request) {
         Product product = new Product();
@@ -31,7 +32,11 @@ public class ProductMapper {
         return ProductResponse
                 .builder()
                 .id(product.getId())
+                .categoryId(product.getCategory().getId())
+                .categoryName(product.getCategory().getName())
                 .name(product.getName())
+                .userId(product.getUser().getId())
+                .username(product.getUser().getFullName())
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .discount(product.getDiscount())
@@ -66,7 +71,7 @@ public class ProductMapper {
     private List<String> toProductImages(List<MultipartFile> imagesReq) {
         return imagesReq
                 .stream()
-                .map(FileUploadUtils::upload)
+                .map(fileUploadUtils::upload)
                 .toList();
     }
 

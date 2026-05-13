@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse update(int id, CategoryRequest request) {
+    public CategoryResponse update(short id, CategoryRequest request) {
         Category category = findByOrThrow(id);
         categoryMapper.applyToCategoryFields(category, request);
 
@@ -45,14 +45,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(short id) {
         Category category = findByOrThrow(id);
         log.info("Delete category {}", category.getName());
         categoryRepository.delete(category);
     }
 
     @Override
-    public CategoryResponse getById(int id) {
+    public CategoryResponse getById(short id) {
         Category category = findByOrThrow(id);
         return categoryMapper.toResponse(category);
     }
@@ -63,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.toResponseList(categories);
     }
 
-    private Category findByOrThrow(int id) {
+    private Category findByOrThrow(short id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category"));
     }

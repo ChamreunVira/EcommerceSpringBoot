@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<CategoryResponse>> getById(@PathVariable int id) {
+    public ResponseEntity<ApiResponse<CategoryResponse>> getById(@PathVariable short id) {
         var response = categoryService.getById(id);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -37,13 +37,13 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<CategoryResponse>> update(@PathVariable int id, @Valid @RequestBody CategoryRequest request) {
+    public ResponseEntity<ApiResponse<CategoryResponse>> update(@PathVariable short id, @Valid @RequestBody CategoryRequest request) {
         var response = categoryService.update(id,request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable int id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable short id) {
         categoryService.delete(id);
         return ResponseEntity.ok().body(ApiResponse.success("Deleted category successfully!"));
     }

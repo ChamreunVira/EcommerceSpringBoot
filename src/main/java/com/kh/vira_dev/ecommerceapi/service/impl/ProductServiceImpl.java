@@ -60,6 +60,6 @@ public class ProductResponseImpl implements ProductService {
     private Product findByOrThrow(int id) {
         log.info("Finding product by id: {}", id);
         return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Prodcut"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product"));
     }
 }

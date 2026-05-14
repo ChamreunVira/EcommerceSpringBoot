@@ -6,30 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
-@Table(name = "tbl_cart_item")
+@Table(name = "tbl_shipping_address")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItem {
+public class ShippingAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
+    private Long id;
 
-    private Integer quantity;
+    private String fullName;
 
-    private Double subtotal;
+    private String phone;
+
+    private String addressLine;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private List<Product> products;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_id" , referencedColumnName = "id")
-    private Cart cart;
-
+    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    private User user;
 
 }

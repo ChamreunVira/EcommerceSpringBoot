@@ -54,9 +54,13 @@ public class ProductMapper {
     }
 
     public void applyToProductFields(Product product , ProductRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category"));
-        product.setCategory(category);
+
+        if(request.getCategoryId() != null) {
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category"));
+            product.setCategory(category);
+        }
+
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());

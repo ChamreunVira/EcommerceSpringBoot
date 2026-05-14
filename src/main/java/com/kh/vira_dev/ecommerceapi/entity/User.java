@@ -1,5 +1,6 @@
 package com.kh.vira_dev.ecommerceapi.entity;
 
+import com.kh.vira_dev.ecommerceapi.enums.Permission;
 import com.kh.vira_dev.ecommerceapi.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,15 +42,17 @@ public class User extends BaseEntity{
     private Set<Role> roles = new HashSet<>();
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> {
-                    String defaultRole = role.name();
-                    if(!defaultRole.startsWith("ROLE_")) {
-                        defaultRole = "ROLE_" + defaultRole;
-                    }
-                    return new SimpleGrantedAuthority(defaultRole);
-                })
-                .collect(Collectors.toSet());
+        
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        
+        roles.forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+            for (Permission permission : role.getPermissions()) {
+                authorities.add(new SimpleGrantedAuthority(permission.name()));
+            }
+        });
+        
+        return authorities;
     }
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -57,5 +60,8 @@ public class User extends BaseEntity{
 
     @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    private Cart cart;
 
 }

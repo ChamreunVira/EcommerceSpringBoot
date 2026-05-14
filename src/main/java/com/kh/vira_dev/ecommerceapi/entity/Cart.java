@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_cart")
 @Getter
@@ -16,9 +19,17 @@ public class Cart extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Short id;
 
     private int totalItem;
-    private int totalAmount;
+
+    private Double totalAmount;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    private User user;
+
+    @OneToMany(mappedBy = "cart" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
 
 }

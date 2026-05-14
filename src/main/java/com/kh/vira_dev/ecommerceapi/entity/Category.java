@@ -18,7 +18,7 @@ public class Category extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
+    private Short id;
 
     @Column(name = "name", nullable = false , unique = true , length = 50)
     private String name;

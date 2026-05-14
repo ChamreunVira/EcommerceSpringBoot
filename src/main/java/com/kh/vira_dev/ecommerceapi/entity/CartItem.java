@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_cart_item")
@@ -33,6 +34,5 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id" , referencedColumnName = "id")
     private Cart cart;
-
 
 }

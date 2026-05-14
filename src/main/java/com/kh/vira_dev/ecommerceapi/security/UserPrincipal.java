@@ -12,58 +12,50 @@ import java.util.Set;
 
 public class UserPrincipal implements UserDetails {
 
-    private final String email;
-    private final String password;
-    private final Set<SimpleGrantedAuthority> authorities;
-    private final boolean accountNonExpired;
-    private final boolean accountNonLocked;
-    private final boolean credentialsNonExpired;
-    private final boolean enabled;
+    private final User user;
 
     public UserPrincipal(User user) {
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.authorities = user.getAuthorities();
-        this.accountNonLocked = true;
-        this.accountNonExpired = true;
-        this.credentialsNonExpired = true;
-        this.enabled = true;
+        this.user = user;
+    }
+
+    public int getId() {
+        return this.user.getId();
     }
 
     @Override
     @NullMarked
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return user.getAuthorities();
     }
 
     @Override
     public @Nullable String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     @NullMarked
     public String getUsername() {
-        return email;
+        return user.getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return accountNonExpired;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 }

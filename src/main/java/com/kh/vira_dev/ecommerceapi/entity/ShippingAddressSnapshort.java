@@ -24,7 +24,7 @@ public class ShippingAddressSnapshort {
     @Column(name = "address_line")
     private String addressLine;
 
-    @Column(name = "note")
+    @Column(name = "shipping_note")
     private String note;
 
 

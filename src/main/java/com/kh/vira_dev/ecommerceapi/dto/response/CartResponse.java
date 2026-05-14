@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -17,11 +18,12 @@ public class CartResponse {
 
     private int userId;
 
-    private List<CartItemResponse> cartItemResponses;
+    private List<CartItemResponse> cartItems;
 
     private Integer totalItems;
 
     private Double totalAmount;
 
+    private Instant updatedAt;
 
 }

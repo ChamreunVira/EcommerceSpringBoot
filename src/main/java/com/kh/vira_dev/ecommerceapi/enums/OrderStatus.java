@@ -1,8 +1,11 @@
 package com.kh.vira_dev.ecommerceapi.enums;
 
 public enum OrderStatus {
+    PENDING_PAYMENT,
     PENDING,
-    PAID,
-    EXPIRED,
-    FAILED
+    PROCESSING,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED,
+    REFUNDED,
 }

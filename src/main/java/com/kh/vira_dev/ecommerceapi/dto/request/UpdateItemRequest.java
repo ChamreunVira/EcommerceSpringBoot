@@ -1,5 +1,7 @@
 package com.kh.vira_dev.ecommerceapi.dto.request;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -8,8 +10,8 @@ import lombok.*;
 @Builder
 public class UpdateItemRequest {
 
-    private short itemId;
-
+    @NotNull
+    @Min(value = 0 , message = "quantity must be 0 or more")
     private Integer quantity;
 
 }

@@ -1,6 +1,8 @@
 package com.kh.vira_dev.ecommerceapi.dto.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AddItemRequest {
 
-    @NotBlank(message = "product is is required.")
+    @NotNull(message = "product id is required.")
     private Integer productId;
 
-    @NotBlank(message = "quantity is required.")
+    @NotNull
+    @Min(value = 1 , message = "quantity must be at least 1")
     private Integer quantity;
 }

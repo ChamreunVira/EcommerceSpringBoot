@@ -43,7 +43,7 @@ public class Order extends BaseEntity{
     private BigDecimal shippingFee;
 
     @Column(name = "total_amount" , nullable = false , precision = 10 , scale = 2)
-    private Double totalAmount;
+    private BigDecimal totalAmount;
 
     @Column(name = "note" , nullable = false , length = 255)
     private String note;
@@ -53,6 +53,9 @@ public class Order extends BaseEntity{
 
     @Column(name = "cancelled_at")
     private Instant cancelledAt;
+
+    @Embedded
+    private ShippingAddressSnapshort shippingAddress;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id" , referencedColumnName = "id")

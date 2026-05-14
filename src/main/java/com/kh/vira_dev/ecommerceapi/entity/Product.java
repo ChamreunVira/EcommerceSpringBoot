@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
     @Column(name = "description" , nullable = false , length = 150)
     private String description;
 
-    @Column(name = "price" , nullable = false , precision = 10 , scale = 2)
+    @Column(name = "price" , nullable = false)
     private double price;
 
     @Column(name = "discount")

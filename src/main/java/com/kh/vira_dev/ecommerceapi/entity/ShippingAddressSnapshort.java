@@ -1,31 +1,31 @@
 package com.kh.vira_dev.ecommerceapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "tbl_shipping_address")
+@Embeddable
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ShippingAddress {
+public class ShippingAddressSnapshort {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column(name = "full_name" , nullable = false)
     private String fullName;
 
+    @Column(name = "phone" , nullable = false)
     private String phone;
 
+    @Column(name = "province")
+    private String province;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "address_line")
     private String addressLine;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id" , referencedColumnName = "id")
-    private User user;
+    @Column(name = "note")
+    private String note;
+
 
 }

@@ -14,39 +14,39 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItem extends BaseEntity{
+public class OrderItem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
-    @Column(name = "product_name" , nullable = false , length = 30)
+    @Column(name = "product_name", nullable = false, length = 30)
     private String productName;
 
-    @Column(name = "product_image" , length = 50)
+    @Column(name = "product_image", length = 50)
     private String productImage;
 
-    @Column(name = "unit_price" , nullable = false , precision = 10 , scale = 2)
+    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;
 
-    @Column(name = "discount_rate" , nullable = false , precision = 10 , scale = 2)
-    private float discountRate;
+    @Column(name = "discount_rate", nullable = false, precision = 10, scale = 2)
+    private BigDecimal discountRate;
 
-    @Column(name = "final_price" , nullable = false , precision = 10 , scale = 2)
-    private float finalPrice;
+    @Column(name = "final_price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal finalPrice;
 
-    @Column(name = "qauntity" , nullable = false)
+    @Column(name = "qauntity", nullable = false)
     private int quantity;
 
-    @Column(name = "subtotal" , nullable = false , precision = 10 , scale = 2)
+    @Column(name = "subtotal", nullable = false, precision = 10, scale = 2)
     private BigDecimal subtotal;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id" , referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id" , referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
 }

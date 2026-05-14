@@ -21,10 +21,6 @@ public class Cart extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
-    private int totalItem;
-
-    private Double totalAmount;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
     private User user;

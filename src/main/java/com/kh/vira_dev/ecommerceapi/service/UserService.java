@@ -2,7 +2,6 @@ package com.kh.vira_dev.ecommerceapi.service;
 
 import com.kh.vira_dev.ecommerceapi.dto.request.UserRequest;
 import com.kh.vira_dev.ecommerceapi.dto.response.UserResponse;
-import com.kh.vira_dev.ecommerceapi.entity.User;
 
 import java.util.List;
 

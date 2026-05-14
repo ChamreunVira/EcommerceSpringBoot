@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -20,12 +21,15 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private short id;
 
-    private Integer quantity;
+    @Column(name = "quantity" , nullable = false)
+    private int quantity;
 
-    private Double subtotal;
+    @Column(name = "unit_price" , nullable = false , precision = 10 , scale = 2)
+    private BigDecimal unitPrice;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private List<Product> products;
+    @JoinColumn(name = "product_id" , referencedColumnName = "id")
+    private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id" , referencedColumnName = "id")

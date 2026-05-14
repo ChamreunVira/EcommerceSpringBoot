@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
     @Column(name = "description" , nullable = false , length = 150)
     private String description;
 
-    @Column(name = "price" , nullable = false)
+    @Column(name = "price" , nullable = false , precision = 10 , scale = 2)
     private double price;
 
     @Column(name = "discount")
@@ -38,7 +38,7 @@ public class Product extends BaseEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
-            name = "product_image",
+            name = "tbl_product_image",
             joinColumns = @JoinColumn(name = "product_id" , referencedColumnName = "id")
     )
     @Column(name = "image_url")
@@ -51,5 +51,8 @@ public class Product extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id" , referencedColumnName = "id")
     private Category category;
+
+    @OneToMany(mappedBy = "product" ,  cascade = CascadeType.ALL , fetch = FetchType.LAZY , orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 }
